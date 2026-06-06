@@ -1,0 +1,46 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build-windows:
+    name: Build Windows EXE without publish
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Show project files
+        shell: pwsh
+        run: |
+          Get-Location
+          Get-ChildItem -Force
+          if (-not (Test-Path package.json)) { throw "package.json not found in repository root" }
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Windows EXE without publish
+        run: npm run dist
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - name: Upload Windows EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: javanrood-windows-exe
+          if-no-files-found: error
+          path: |
+            dist/*.exe
+            dist/*.blockmap
