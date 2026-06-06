@@ -1,0 +1,45 @@
+{
+  "name": "javanrood-ngo-admin-client-v60-3d-login-fixed",
+  "version": "1.0.60",
+  "description": "سامانه جمع‌آوری اطلاعات سمن‌های مردم‌نهاد جوانرود - نسخه V58 با تم سه‌بعدی و حساب کاربری",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "npm run build:win",
+    "build:win": "electron-builder --win --x64 --publish=never"
+  },
+  "build": {
+    "appId": "ir.javanrood.ngo.admin.v58",
+    "productName": "سامانه سمن جوانرود V60",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "app/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "سامانه سمن جوانرود"
+    },
+    "publish": []
+  },
+  "devDependencies": {
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8"
+  }
+}
